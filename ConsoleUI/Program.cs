@@ -13,7 +13,7 @@ namespace ConsoleUI
 
             CarManager carManager = new CarManager(new EfCarDal());
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-
+            
 
 
             foreach (var brand in brandManager.GetAll())

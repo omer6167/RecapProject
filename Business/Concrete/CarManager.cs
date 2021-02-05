@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
+using Business.ValidationRule.CustomValidation;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
@@ -41,11 +42,24 @@ namespace Business.Concrete
             return _carDal.GetAll(c => c.BrandId == id);
         }
 
+        public List<Car> GetByColorId(int id)
+        {
+            return _carDal.GetAll(c => c.ColorId == id);
+        }
+
         public void Add(Car car)
         {
 
             //Bussiness Code
-
+            try
+            {
+                CarValidator.ValidateNameLength(car);
+                CarValidator.ValidateDailyPrice(car);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
             //Dal Code
             _carDal.Add(car);
         }

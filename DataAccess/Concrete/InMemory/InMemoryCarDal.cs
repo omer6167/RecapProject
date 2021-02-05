@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -18,25 +19,35 @@ namespace DataAccess.Concrete.InMemory
                 new Car() { Id = 1,BrandId = 1,ColorId = 1,DailyPrice = 200,Description = "New Car"},
                 new Car() { Id = 2,BrandId = 1,ColorId = 1,DailyPrice = 300,Description = "Old Fashion car"},
                 new Car() { Id = 3,BrandId = 1,ColorId = 2,DailyPrice = 250,Description = "Classic car"},
-                new Car() { Id = 4,BrandId = 2,ColorId = 2,DailyPrice = 50,Description = "New Sport Car"},
+                new Car() { Id = 4,BrandId = 2,ColorId = 2,DailyPrice = 50, Description = "New Sport Car"},
                 new Car() { Id = 5,BrandId = 2,ColorId = 2,DailyPrice = 100,Description = "Old Fox"}
             };
         }
+        
 
-        public List<Car> GetAll()
+        
+
+        public List<Car> GetAll(Expression<Func<Car, bool>> expressionFilter = null)
         {
-            return _cars;
+            return  expressionFilter == null
+                ? _cars.ToList()
+                : _cars.Where(expressionFilter.Compile()).ToList();
         }
 
-        public Car GetById(int ıd)
+        public Car GetById(Expression<Func<Car, bool>> expressionFilter)
         {
-            return _cars.SingleOrDefault(c => c.Id == ıd);
+            //Func<Car, bool> func = expressionFilter.Compile();
+            //Predicate<Car> pred = func.Invoke;
+            //return _cars.Find(pred);
+
+            //OR
+
+            //Func<Car, bool> func = expressionFilter.Compile();
+            //Predicate<Car> pred = func.Invoke;
+            return _cars.SingleOrDefault(expressionFilter.Compile());
+
         }
 
-        public List<Car> GetByBrandId(int ıd)
-        {
-            return _cars.Where(c => c.BrandId == ıd).ToList();
-        }
 
         public void Add(Car car)
         {
@@ -46,14 +57,12 @@ namespace DataAccess.Concrete.InMemory
         public void Update(Car car)
         {
             Car updCar = _cars.SingleOrDefault(c => c.Id == car.Id);
-            if (updCar != null)
-            {
-                updCar.BrandId = car.BrandId;
-                updCar.ColorId = car.ColorId;
-                updCar.DailyPrice = car.DailyPrice;
-                updCar.ModelYear = car.ModelYear;
-                updCar.Description = car.Description;
-            }
+            if (updCar == null) return;
+            updCar.BrandId = car.BrandId;
+            updCar.ColorId = car.ColorId;
+            updCar.DailyPrice = car.DailyPrice;
+            updCar.ModelYear = car.ModelYear;
+            updCar.Description = car.Description;
         }
 
         public void Delete(Car car)

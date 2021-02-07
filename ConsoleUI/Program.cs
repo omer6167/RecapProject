@@ -16,9 +16,9 @@ namespace ConsoleUI
             
 
 
-            foreach (var brand in brandManager.GetAll())
+            foreach (var dto in carManager.GetCarDetail())
             {
-                Console.WriteLine(brand.Name);
+                Console.WriteLine(dto);
             }
 
 

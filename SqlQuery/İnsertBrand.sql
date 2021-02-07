@@ -1,19 +1,19 @@
 --Ýnsert Brand
-insert Color values
+insert Brand values
+('Tofaþ'),
+('Fiat'),
 ('Audi'),
 ('BMW'),
+('Mercedes'),
 ('Chevrolet'),
 ('Citroen'),
 ('Dacia'),
-('Fiat'),
-('Ford'),
-('Mazda'),
-('Mercedes'),
-('Nissan'),
-('Opel'),
 ('Peugeot'),
-('Renault'),
+('Ford'),
+('Opel'),
+('Mazda'),
+('Nissan'),
 ('Seat'),
-('Tofaþ'),
-('Toyota'),
-('Volkswagen')
+('Renault'),
+('Volkswagen'),
+('Toyota')

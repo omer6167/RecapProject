@@ -5,6 +5,7 @@ using Business.Abstract;
 using Business.ValidationRule.CustomValidation;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -30,7 +31,7 @@ namespace Business.Concrete
             //Bussiness Code
 
             //Dal Code
-            return _carDal.Get(c=> c.Id ==id);
+            return _carDal.Get(c => c.Id == id);
         }
 
         public List<Car> GetByBrandId(int id)
@@ -45,6 +46,11 @@ namespace Business.Concrete
         public List<Car> GetByColorId(int id)
         {
             return _carDal.GetAll(c => c.ColorId == id);
+        }
+
+        public List<CarDetailDto> GetCarDetail()
+        {
+            return _carDal.GetCarDetail();
         }
 
         public void Add(Car car)

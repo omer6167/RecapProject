@@ -4,12 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Entities.DTOs;
 
 namespace DataAccess.Concrete.InMemory
 {
     public class InMemoryCarDal:ICarDal
     {
         private List<Car> _cars;
+        private List<Brand> _brands;
+        private List<Color> _colors;
 
         public InMemoryCarDal()
         {
@@ -69,6 +72,24 @@ namespace DataAccess.Concrete.InMemory
             Car delCar = _cars.SingleOrDefault(c => c.Id == car.Id);
 
             _cars.Remove(delCar);
+        }
+
+        public List<CarDetailDto> GetCarDetail()
+        {
+            // _brand ve _colors nesne örneği üretilmedi
+            var result = from car in _cars.ToList()
+                join brand in _brands.ToList()
+                    on car.BrandId equals brand.Id
+                join color in _colors.ToList()
+                    on car.ColorId equals color.Id
+                select new CarDetailDto
+                {
+                    CarName = car.Name,
+                    BrandName = brand.Name,
+                    ColorName = color.Name,
+                    DailyPrice = car.DailyPrice
+                };
+            return result.ToList();
         }
     }
 }

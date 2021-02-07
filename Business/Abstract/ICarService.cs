@@ -8,7 +8,7 @@ namespace Business.Abstract
     public interface ICarService
     {
         List<Car> GetAll();
-        Car GetById(int ıd);
+        Car GetById(int id);
         List<Car> GetByBrandId(int id);
         List<Car> GetByColorId(int id);
         void Add(Car car);

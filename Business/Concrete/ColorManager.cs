@@ -16,24 +16,24 @@ namespace Business.Concrete
             return _colorDal.GetAll();
         }
 
-        public Color GetById(int ıd)
+        public Color GetById(int id)
         {
-            throw new NotImplementedException();
+            return _colorDal.Get(c => c.Id == id);
         }
 
         public void Add(Color color)
         {
-            throw new NotImplementedException();
+            _colorDal.Add(color);
         }
 
         public void Update(Color color)
         {
-            throw new NotImplementedException();
+            _colorDal.Update(color);
         }
 
         public void Delete(Color color)
         {
-            throw new NotImplementedException();
+            _colorDal.Delete(color);
         }
     }
 }

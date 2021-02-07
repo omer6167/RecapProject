@@ -30,7 +30,7 @@ namespace Business.Concrete
             //Bussiness Code
 
             //Dal Code
-            return _carDal.GetById(c=> c.Id ==id);
+            return _carDal.Get(c=> c.Id ==id);
         }
 
         public List<Car> GetByBrandId(int id)

@@ -22,24 +22,24 @@ namespace Business.Concrete
             return _brandDal.GetAll();
         }
 
-        public Brand GetById(int ıd)
+        public Brand GetById(int id)
         {
-            throw new NotImplementedException();
+            return _brandDal.Get(b=> b.Id == id);
         }
 
         public void Add(Brand brand)
         {
-            throw new NotImplementedException();
+            _brandDal.Add(brand);
         }
 
         public void Update(Brand brand)
         {
-            throw new NotImplementedException();
+            _brandDal.Update(brand);
         }
 
         public void Delete(Brand brand)
         {
-            throw new NotImplementedException();
+            _brandDal.Delete(brand);
         }
     }
 }

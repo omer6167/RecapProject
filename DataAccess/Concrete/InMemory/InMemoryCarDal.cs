@@ -1,10 +1,9 @@
-﻿using System;
+﻿using DataAccess.Abstract;
+using Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using DataAccess.Abstract;
-using Entities.Concrete;
 
 namespace DataAccess.Concrete.InMemory
 {
@@ -34,7 +33,7 @@ namespace DataAccess.Concrete.InMemory
                 : _cars.Where(expressionFilter.Compile()).ToList();
         }
 
-        public Car GetById(Expression<Func<Car, bool>> expressionFilter)
+        public Car Get(Expression<Func<Car, bool>> expressionFilter)
         {
             //Func<Car, bool> func = expressionFilter.Compile();
             //Predicate<Car> pred = func.Invoke;

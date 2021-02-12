@@ -17,9 +17,8 @@ namespace Business.Constants.Concrete
         public static string BrandUpdated = "Marka güncelleme işlemi başarılı";
         public static string ColorDeleted = "Renk silme işlemi başarılı";
         public static string BrandDeleted = "Marka silme işlemi başarılı";
-        public static string ColorAddError = "Eklemek istediğiniz renk zaten mevcut.Farklı bir renk giriniz.";
-        public static string BrandAddError = "Eklemek istediğiniz marka zaten mevcut.Farklı bir renk giriniz.";
-
-        public static string CarAddError = "Araç Kayıt İşlemi başarısız";
+        public static string ColorAddError = "Renk Ekleme İşlemi Başarısız.";
+        public static string BrandAddError = "Marka Ekle İşlemi Başarısız.";
+        public static string CarAddError = "Araç Kayıt İşlemi Başarısız";
     }
 }

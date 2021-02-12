@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
+using Business.Constants.Concrete;
 using Business.ValidationRule.CustomValidation;
+using Core.Utilities.Results.Abstract;
+using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -18,42 +21,42 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
             //Bussiness Code
 
             //Dal Code
-            return _carDal.GetAll();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
 
-        public Car GetById(int id)
+        public IDataResult<Car> GetById(int id)
         {
             //Bussiness Code
 
             //Dal Code
-            return _carDal.Get(c => c.Id == id);
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
         }
 
-        public List<Car> GetByBrandId(int id)
+        public IDataResult<List<Car>> GetByBrandId(int id)
         {
 
             //Bussiness Code
 
             //Dal Code
-            return _carDal.GetAll(c => c.BrandId == id);
+            return new  SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == id));
         }
 
-        public List<Car> GetByColorId(int id)
+        public IDataResult<List<Car>> GetByColorId(int id)
         {
-            return _carDal.GetAll(c => c.ColorId == id);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id));
         }
 
-        public List<CarDetailDto> GetCarDetail()
+        public IDataResult<List<CarDetailDto>> GetCarDetail()
         {
-            return _carDal.GetCarDetail();
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetail());
         }
 
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
 
             //Bussiness Code
@@ -64,28 +67,34 @@ namespace Business.Concrete
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                return new ErrorResult($"{Messages.ColorAddError} , {e.Message}");
             }
             //Dal Code
             _carDal.Add(car);
+
+            return new SuccessResult(Messages.CarAdded);
         }
 
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
 
             //Bussiness Code
 
             //Dal Code
             _carDal.Update(car);
+
+            return new SuccessResult(Messages.CarUpdated);
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
 
             //Bussiness Code
 
             //Dal Code
             _carDal.Delete(car);
+
+            return new SuccessResult(Messages.CarDeleted);
         }
     }
 }

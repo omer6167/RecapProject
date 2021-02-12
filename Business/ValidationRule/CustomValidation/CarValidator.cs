@@ -7,11 +7,12 @@ namespace Business.ValidationRule.CustomValidation
 {
     public class CarValidator
     {
+        
         public static void ValidateNameLength(Car car)
         {
             if (car.Name.Length <2)
             {
-                throw new Exception("Car's Name's length cannot be smaller than two");
+                throw new Exception(message:"Car's Name's length cannot be smaller than two ");
             }
         }
 
@@ -19,9 +20,8 @@ namespace Business.ValidationRule.CustomValidation
         {
             if (car.DailyPrice<=0)
             {
-                throw new Exception("Daily price must be bigger than zero");
+                throw new Exception(message:"Daily price must be bigger than zero ");
             }
         }
-
     }
 }

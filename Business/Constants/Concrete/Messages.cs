@@ -23,7 +23,7 @@ namespace Business.Constants.Concrete
         public static string BrandAddError = "Marka Ekle İşlemi Başarısız.";
         public static string CarAddError = "Araç Kayıt İşlemi Başarısız";
         public static string RentalErorr = "Kiralama işlemi Başarısız";
-
+        public static string RentalUpdatedErorr = "İlgili Araba hali hazırda kiralık durumda";
 
     }
 }

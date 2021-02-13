@@ -1,0 +1,1 @@
+insert Customers values(1,'RentACar')

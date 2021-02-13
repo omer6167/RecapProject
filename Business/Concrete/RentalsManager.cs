@@ -21,7 +21,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rentals>>(_rentalsDal.GetAll());
         }
 
-        public IDataResult<List<RentalDetailDto>> GetRentalDetail()
+        public IDataResult<List<RentalDetailDto>> GetRentalDetails()
         {
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalsDal.GetRentalDetails());
         }
@@ -31,15 +31,27 @@ namespace Business.Concrete
             return new SuccessDataResult<Rentals>(_rentalsDal.Get(r => r.Id == id));
         }
 
-        public IResult Add(Rentals rentals)
+        public IResult Rent(Rentals rentals)
         {
+            var result = _rentalsDal.CheckCarId(rentals.CarId);
+            if (result > 0)
+            {
+                return new ErrorResult(Messages.RentalUpdatedErorr);
+            }
             _rentalsDal.Add(rentals);
             return new SuccessResult(Messages.RentalAdded);
         }
 
-        public IResult Update(Rentals rentals)
+        public IResult UpdateReturnDate(int carId)
         {
-            _rentalsDal.Update(rentals);
+            var updatedRental = _rentalsDal.CheckReturnDate(carId);
+            if (updatedRental == null)
+            {
+                return new ErrorResult(Messages.RentalUpdatedErorr);
+            }
+            updatedRental.ReturnDate = DateTime.Now;
+            _rentalsDal.Update(updatedRental);
+
             return new SuccessResult(Messages.RentalUpdated);
         }
 
@@ -47,11 +59,6 @@ namespace Business.Concrete
         {
             _rentalsDal.Delete(rentals);
             return new SuccessResult(Messages.RentalDeleted);
-        }
-
-        public IResult UpdateReturnDate(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

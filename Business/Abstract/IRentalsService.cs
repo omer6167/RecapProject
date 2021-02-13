@@ -10,11 +10,11 @@ namespace Business.Abstract
     public interface IRentalsService
     {
         IDataResult<List<Rentals>> GetAll();
-        IDataResult<List<RentalDetailDto>> GetRentalDetail();
+        IDataResult<List<RentalDetailDto>> GetRentalDetails();
         IDataResult<Rentals> GetById(int id);
-        IResult Add(Rentals rentals);
-        IResult Update(Rentals rentals);
+        IResult Rent(Rentals rentals);
+        IResult UpdateReturnDate(int CarId);
         IResult Delete(Rentals rentals);
-        IResult UpdateReturnDate(int id);
+       
     }
 }

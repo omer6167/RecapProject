@@ -1,0 +1,1 @@
+insert Users values('ömer','küçük','omer@omer.com','omer')

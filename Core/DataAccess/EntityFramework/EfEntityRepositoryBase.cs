@@ -35,6 +35,7 @@ namespace Core.DataAccess.EntityFramework
             using (TContext context = new TContext())
             {
                 context.Entry(entity).State = EntityState.Added;
+                context.SaveChanges();
             }
         }
 
@@ -43,6 +44,7 @@ namespace Core.DataAccess.EntityFramework
             using (TContext context = new TContext())
             {
                 context.Entry(entity).State = EntityState.Modified;
+                context.SaveChanges();
             }
         }
 
@@ -51,6 +53,7 @@ namespace Core.DataAccess.EntityFramework
             using (TContext context = new TContext())
             {
                 context.Entry(entity).State = EntityState.Deleted;
+                context.SaveChanges();
             }
         }
     }

@@ -67,7 +67,7 @@ namespace Business.Concrete
             }
             catch (Exception e)
             {
-                return new ErrorResult($"{Messages.ColorAddError} , {e.Message}");
+                return new ErrorResult($"{Messages.CarAddError} , {e.Message}");
             }
             //Dal Code
             _carDal.Add(car);

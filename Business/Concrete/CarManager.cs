@@ -4,6 +4,7 @@ using System.Text;
 using Business.Abstract;
 using Business.Constants.Concrete;
 using Business.ValidationRule.CustomValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -55,21 +56,13 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetail());
         }
-
+        
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
 
             //Bussiness Code
-            try
-            {
-                CarValidator.ValidateNameLength(car);
-                CarValidator.ValidateDailyPrice(car);
-            }
-            catch (Exception e)
-            {
-                return new ErrorResult($"{Messages.CarAddError} , {e.Message}");
-            }
-            //Dal Code
+
             _carDal.Add(car);
 
             return new SuccessResult(Messages.CarAdded);

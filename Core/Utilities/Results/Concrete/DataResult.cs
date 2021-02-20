@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Core.Utilities.Results.Abstract;
 
 namespace Core.Utilities.Results.Concrete
 {
-    public class DataResult<T> :Result, IDataResult<T>
+    public class DataResult<T> :Result, IDataResult<T>  
     {
         public T Data { get; }
 
@@ -17,5 +18,11 @@ namespace Core.Utilities.Results.Concrete
         {
             Data = data;
         }
+
+        //public IEnumerator GetEnumerator()
+        //{
+
+        //    yield return Data.ToString();
+        //}
     }
 }

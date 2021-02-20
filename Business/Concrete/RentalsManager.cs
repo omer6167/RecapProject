@@ -31,6 +31,18 @@ namespace Business.Concrete
             return new SuccessDataResult<Rentals>(_rentalsDal.Get(r => r.Id == id));
         }
 
+        [Obsolete("Kullanılmıyor")]
+        public IResult Add(Rentals entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        [Obsolete("Kullanılmıyor")]
+        public IResult Update(Rentals entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public IResult Rent(Rentals rentals)
         {
             var result = _rentalsDal.CheckCarId(rentals.CarId);

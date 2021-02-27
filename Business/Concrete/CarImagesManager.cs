@@ -16,6 +16,8 @@ namespace Business.Concrete
 {
     public class CarImagesManager : ICarImagesService
     {
+        string defaultImagePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\Images\CarImages\logo.jpg");
+
         private ICarImagesDal _carImagesDal;
 
         public CarImagesManager(ICarImagesDal carImagesDal)
@@ -30,9 +32,21 @@ namespace Business.Concrete
 
         public IDataResult<List<CarImages>> GetByCarId(int carId)
         {
-            var result = _carImagesDal.GetAll(c => c.CarId == carId);
+            var result = BusinessRules.Run(CheckIfCarImageNull(carId));
 
-            return new SuccessDataResult<List<CarImages>>(result);
+            if (result.Success)
+            {
+                return new SuccessDataResult<List<CarImages>>(
+                    new List<CarImages>
+                    {
+                        new CarImages {
+                            CarId = carId,
+                            ImagePath = defaultImagePath,
+                            Date = DateTime.Now}
+                    });
+            }
+
+            return new ErrorDataResult<List<CarImages>>(_carImagesDal.GetAll(c=>c.CarId == carId));
         }
 
         public IResult Add(IFormFile file, CarImages carImage)
@@ -47,7 +61,6 @@ namespace Business.Concrete
 
             carImage.ImagePath = FileHelper.Add(file);
 
-
             _carImagesDal.Add(carImage);
 
             return new SuccessResult(Messages.CarImagesAdded);
@@ -59,16 +72,23 @@ namespace Business.Concrete
 
            carImage.ImagePath = FileHelper.Update(file,result.ImagePath);
 
+           _carImagesDal.Update(carImage);
+           
            return new SuccessResult(Messages.CarImagesUpdated);
         }
 
-        public IResult Delete(CarImages carImages)
+        public IResult Delete(int id)
         {
-            var result = FileHelper.Delete(carImages.ImagePath);
+            var data = _carImagesDal.Get(c=>c.CarId ==id);
+
+            var result = FileHelper.Delete(data.ImagePath);
             if (!result.Success)
             {
                 return new ErrorResult(Messages.CarImagesDeletedError);
             }
+
+            _carImagesDal.Delete(data);
+
 
             return new SuccessResult(Messages.CarImagesAdded);
         }
@@ -86,23 +106,31 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        private IDataResult<List<CarImages>> CheckIfCarImageNull(int carId)
+        /// <summary>
+        /// Return true if car's image == null
+        /// </summary>
+        /// <param name="carId"></param>
+        /// <returns></returns>
+        private IResult CheckIfCarImageNull(int carId)
         {
-            
-            var result = _carImagesDal.GetAll(c => c.CarId == carId);
-            if (result.Count==0)
+            var result = _carImagesDal.GetAll(c => c.CarId == carId).Any();
+            if (!result)
             {
-                string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\Images\CarImages\logo.jpg");
-                return new SuccessDataResult<List<CarImages>>(
-                    new List<CarImages>
-                    {
-                        new CarImages {
-                            CarId = carId,
-                            ImagePath = path,
-                            Date = DateTime.Now}
-                    });
+                return new SuccessResult();
             }
-            return new ErrorDataResult<List<CarImages>>(result);
+            return new ErrorResult();
+        }
+
+        private IResult CheckIsFormatImage(IFormFile file)
+        {
+            var extension = Path.GetExtension(file.FileName);
+            string[] allowedExtensions = { ".gif", ".png", ".jpeg", ".jpg" };
+            if (allowedExtensions.Contains(extension.ToLower()))
+            {
+                return new SuccessResult();
+            }
+            
+            return new ErrorResult();
         }
     }
 }

@@ -15,7 +15,12 @@ namespace Business.Concrete
     public class RentalsManager : IRentalsService
     {
         private IRentalsDal _rentalsDal;
-         
+
+        public RentalsManager(IRentalsDal rentalsDal)
+        {
+            _rentalsDal = rentalsDal;
+        }
+
         public IDataResult<List<Rentals>> GetAll()
         {
             return new SuccessDataResult<List<Rentals>>(_rentalsDal.GetAll());
@@ -46,23 +51,25 @@ namespace Business.Concrete
         public IResult Rent(Rentals rentals)
         {
             var result = _rentalsDal.CheckCarId(rentals.CarId);
-            if (result > 0)
+            if (!result.Success)
             {
                 return new ErrorResult(Messages.RentalUpdatedErorr);
             }
+
             _rentalsDal.Add(rentals);
             return new SuccessResult(Messages.RentalAdded);
         }
 
         public IResult UpdateReturnDate(int carId)
         {
-            var updatedRental = _rentalsDal.CheckReturnDate(carId);
-            if (updatedRental == null)
+            var result = _rentalsDal.CheckReturnDate(carId);
+            if (!result.Success)
             {
                 return new ErrorResult(Messages.RentalUpdatedErorr);
             }
-            updatedRental.ReturnDate = DateTime.Now;
-            _rentalsDal.Update(updatedRental);
+
+            result.Data.ReturnDate = DateTime.Now;
+            _rentalsDal.Update(result.Data);
 
             return new SuccessResult(Messages.RentalUpdated);
         }
@@ -74,3 +81,4 @@ namespace Business.Concrete
         }
     }
 }
+

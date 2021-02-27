@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Core.Entities;
 using Core.Utilities.Results.Abstract;
 
-namespace Core.Bussiness.Service
+namespace Core.Business.Service
 {
-    public interface IServiceRepository<T>
+    public interface IServiceRepository<T> where T : IEntity
     {
         IDataResult<List<T>> GetAll();
         IDataResult<T> GetById(int id);

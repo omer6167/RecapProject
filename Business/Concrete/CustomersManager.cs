@@ -13,7 +13,12 @@ namespace Business.Concrete
     public class CustomersManager : ICustomersService
     {
         private ICustomersDal _customersDal;
-        
+
+        public CustomersManager(ICustomersDal customersDal)
+        {
+            _customersDal = customersDal;
+        }
+
         public IDataResult<List<Customers>> GetAll()
         {
             return new SuccessDataResult<List<Customers>>(_customersDal.GetAll());

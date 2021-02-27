@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading;
 using Core.DataAccess;
 using Core.DataAccess.EntityFramework;
+using Core.Utilities.Results.Abstract;
+using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -39,18 +41,23 @@ namespace DataAccess.Concrete.EntityFramework
             return result.ToList();
         }
 
-        public int CheckCarId(int carId)
+        public IDataResult<int> CheckCarId(int carId)
         {
             using var context = new RentACarContext();
             var result =
                 from rentals in context.Rentals
                 where carId == rentals.CarId && rentals.RentDate == null
-                    select rentals.CarId;
-                
-            return result.Count();
+                select rentals.CarId;
+            
+            if (result.Any())
+            {
+                return new ErrorDataResult<int>(result.Count());
+            }
+
+            return new SuccessDataResult<int>(result.Count());
         }
 
-        public Rentals CheckReturnDate(int carId)
+        public IDataResult<Rentals> CheckReturnDate(int carId)
         {
             using var context = new RentACarContext();
             var result =
@@ -63,8 +70,13 @@ namespace DataAccess.Concrete.EntityFramework
                     RentDate = rentals.RentDate,
                     ReturnDate = rentals.ReturnDate
                 };
+            
+            if (result == null)
+            {
+                return new ErrorDataResult<Rentals>(result.LastOrDefault());
+            }
 
-            return result.LastOrDefault();
+            return new SuccessDataResult<Rentals>(result.LastOrDefault());
         }
     }
 }

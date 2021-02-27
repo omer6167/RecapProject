@@ -18,7 +18,11 @@ namespace DataAccess.Concrete.EntityFramework
             modelBuilder.Entity<Rentals>()
                 .Property(r => r.RentDate)
                 .HasDefaultValueSql("getdate()");
-            
+
+            modelBuilder.Entity<CarImages>()
+                .Property(car => car.Date)
+                .HasDefaultValueSql("getdate()");
+
 
             modelBuilder.Entity<Users>()
                 .Property(U => U.Name)

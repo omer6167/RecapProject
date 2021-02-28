@@ -14,7 +14,7 @@ using Entities.DTOs;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfRentalsDal : EfEntityRepositoryBase<Rentals,RentACarContext> , IRentalsDal
+    public class EfRentalsDal : EfEntityRepositoryBase<Rental,RentACarContext> , IRentalsDal
     {
         public List<RentalDetailDto> GetRentalDetails()
         {
@@ -25,9 +25,9 @@ namespace DataAccess.Concrete.EntityFramework
                         on rentals.CustomerId equals customer.UserId
                     join users in context.Users
                         on customer.UserId equals users.Id
-                    join car in context.Car
+                    join car in context.Cars
                         on rentals.CarId equals car.Id
-                    join brand in context.Brand 
+                    join brand in context.Brands 
                         on car.BrandId equals brand.Id
                 select new RentalDetailDto
                 {
@@ -57,13 +57,13 @@ namespace DataAccess.Concrete.EntityFramework
             return new SuccessDataResult<int>(result.Count());
         }
 
-        public IDataResult<Rentals> CheckReturnDate(int carId)
+        public IDataResult<Rental> CheckReturnDate(int carId)
         {
             using var context = new RentACarContext();
             var result =
                 from rentals in context.Rentals
                 where carId == rentals.CarId && rentals.RentDate == null
-                select new Rentals
+                select new Rental
                 {
                     Id = rentals.Id,
                     CarId = rentals.CarId,
@@ -73,10 +73,10 @@ namespace DataAccess.Concrete.EntityFramework
             
             if (result == null)
             {
-                return new ErrorDataResult<Rentals>(result.LastOrDefault());
+                return new ErrorDataResult<Rental>(result.LastOrDefault());
             }
 
-            return new SuccessDataResult<Rentals>(result.LastOrDefault());
+            return new SuccessDataResult<Rental>(result.LastOrDefault());
         }
     }
 }

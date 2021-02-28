@@ -47,6 +47,9 @@ namespace Business.Constants.Concrete
         public static string CarImagesAddedError => "Araba Resmi Ekleme İşlemi Başarısız";
         public static string CarImagesUpdatedError => "Araba Resmi Güncellenme İşlemi Başarısız";
         public static string CarImagesDeletedError => "Araba Resmi Silme İşlemi Başarısız";
-
+        
+        
+        
+        public static string AuthorizationDenied => "A";
     }
 }

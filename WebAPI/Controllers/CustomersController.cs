@@ -48,7 +48,7 @@ namespace WebAPI.Controllers
         #region HTTPPost
 
         [HttpPost("add")]
-        public IActionResult Add(Customers customers)
+        public IActionResult Add(Customer customers)
         {
             var result = _customersService.Add(customers);
             if (result.Success)
@@ -59,7 +59,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Customers customers)
+        public IActionResult Update(Customer customers)
         {
             var result = _customersService.Update(customers);
             if (result.Success)
@@ -70,7 +70,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Customers customers)
+        public IActionResult Delete(Customer customers)
         {
             var result = _customersService.Delete(customers);
             if (result.Success)

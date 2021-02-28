@@ -7,7 +7,7 @@ using Entities.Concrete;
 
 namespace Business.Abstract
 {
-    public interface ICustomersService : IServiceRepository<Customers>
+    public interface ICustomersService : IServiceRepository<Customer>
     {
        
     }

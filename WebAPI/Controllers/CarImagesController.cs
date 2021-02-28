@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
 
 
         [HttpPost("add")]
-        public IActionResult Add([FromForm] IFormFile file, CarImages carImages)
+        public IActionResult Add([FromForm] IFormFile file, CarImage carImages)
         {
             var result = _carImagesService.Add(file ,carImages);
             if (result.Success)
@@ -63,7 +63,7 @@ namespace WebAPI.Controllers
 
 
         [HttpPost("update")]
-        public IActionResult Update([FromForm] IFormFile file, CarImages carImages)
+        public IActionResult Update([FromForm] IFormFile file, CarImage carImages)
         {
             var result = _carImagesService.Update(file,carImages);
             if (result.Success)

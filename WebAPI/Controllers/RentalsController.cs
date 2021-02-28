@@ -61,7 +61,7 @@ namespace WebAPI.Controllers
         #endregion
 
         [HttpPost("rent")]
-        public IActionResult Rent(Rentals rentals)
+        public IActionResult Rent(Rental rentals)
         {
             var result = _rentalsService.Rent(rentals);
             if (result.Success)
@@ -85,7 +85,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Rentals rentals)
+        public IActionResult Delete(Rental rentals)
         {
             var result = _rentalsService.Delete(rentals);
             if (result.Success)

@@ -30,25 +30,29 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
             //services.AddSingleton<IBrandService, BrandManager>();
             //services.AddSingleton<IBrandDal, EfBrandDal>();
 
-            //services.AddSingleton<ICarService, CarManager>();
-            //services.AddSingleton<ICarDal, EfCarDal>();
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            //services.AddSingleton<IColorService, ColorManager>();
-            //services.AddSingleton<IColorDal, EfColorDal>();
+            //var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
-            //services.AddSingleton<ICustomersService, CustomersManager>();
-            //services.AddSingleton<ICustomersDal, EfCustomersDal>();
-            
-            //services.AddSingleton<IRentalsService, RentalsManager>();
-            //services.AddSingleton<IRentalsDal, EfRentalsDal>();
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(options =>
+            //    {
+            //        options.TokenValidationParameters = new TokenValidationParameters
+            //        {
+            //            ValidateIssuer = true,
+            //            ValidateAudience = true,
+            //            ValidateLifetime = true,
+            //            ValidIssuer = tokenOptions.Issuer,
+            //            ValidAudience = tokenOptions.Audience,
+            //            ValidateIssuerSigningKey = true,
+            //            IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+            //        };
+            //    });
+            //ServiceTool.Create(services);
 
-            //services.AddSingleton<IUsersService, UsersManager>();
-            //services.AddSingleton<IUsersDal, EfUsersDal>();
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +66,8 @@ namespace WebAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

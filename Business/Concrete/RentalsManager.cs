@@ -21,9 +21,9 @@ namespace Business.Concrete
             _rentalsDal = rentalsDal;
         }
 
-        public IDataResult<List<Rentals>> GetAll()
+        public IDataResult<List<Rental>> GetAll()
         {
-            return new SuccessDataResult<List<Rentals>>(_rentalsDal.GetAll());
+            return new SuccessDataResult<List<Rental>>(_rentalsDal.GetAll());
         }
 
         public IDataResult<List<RentalDetailDto>> GetRentalDetails()
@@ -31,24 +31,24 @@ namespace Business.Concrete
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalsDal.GetRentalDetails());
         }
 
-        public IDataResult<Rentals> GetById(int id)
+        public IDataResult<Rental> GetById(int id)
         {
-            return new SuccessDataResult<Rentals>(_rentalsDal.Get(r => r.Id == id));
+            return new SuccessDataResult<Rental>(_rentalsDal.Get(r => r.Id == id));
         }
 
         [Obsolete("Kullanılmıyor")]
-        public IResult Add(Rentals entity)
+        public IResult Add(Rental entity)
         {
             throw new NotImplementedException();
         }
 
         [Obsolete("Kullanılmıyor")]
-        public IResult Update(Rentals entity)
+        public IResult Update(Rental entity)
         {
             throw new NotImplementedException();
         }
 
-        public IResult Rent(Rentals rentals)
+        public IResult Rent(Rental rentals)
         {
             var result = _rentalsDal.CheckCarId(rentals.CarId);
             if (!result.Success)
@@ -74,7 +74,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalUpdated);
         }
 
-        public IResult Delete(Rentals rentals)
+        public IResult Delete(Rental rentals)
         {
             _rentalsDal.Delete(rentals);
             return new SuccessResult(Messages.RentalDeleted);

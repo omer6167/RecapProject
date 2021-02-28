@@ -19,31 +19,31 @@ namespace Business.Concrete
             _customersDal = customersDal;
         }
 
-        public IDataResult<List<Customers>> GetAll()
+        public IDataResult<List<Customer>> GetAll()
         {
-            return new SuccessDataResult<List<Customers>>(_customersDal.GetAll());
+            return new SuccessDataResult<List<Customer>>(_customersDal.GetAll());
         }
 
-        public IDataResult<Customers> GetById(int userId)
+        public IDataResult<Customer> GetById(int userId)
         {
-            return new SuccessDataResult<Customers>(_customersDal.Get(c => c.UserId == userId));
+            return new SuccessDataResult<Customer>(_customersDal.Get(c => c.UserId == userId));
         }
 
-        public IResult Add(Customers customers)
+        public IResult Add(Customer customers)
         {
             _customersDal.Add(customers);
             
             return new SuccessResult(Messages.CustomersAdded);
         }
 
-        public IResult Update(Customers customers)
+        public IResult Update(Customer customers)
         {
             _customersDal.Update(customers);
 
             return new SuccessResult(Messages.CustomersUpdated);
         }
 
-        public IResult Delete(Customers customers)
+        public IResult Delete(Customer customers)
         {
             _customersDal.Delete(customers);
 

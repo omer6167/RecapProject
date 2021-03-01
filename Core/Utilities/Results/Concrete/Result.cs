@@ -8,7 +8,7 @@ namespace Core.Utilities.Results.Concrete
     public class Result : IResult
     {
         public bool Success { get; }
-        public string Messages { get; }
+        public string Message { get; }
 
         public Result(bool success)
         {
@@ -17,7 +17,7 @@ namespace Core.Utilities.Results.Concrete
 
         public Result(bool success,string messages) : this(success)
         {
-            Messages = messages;
+            Message = messages;
         }
     }
 }

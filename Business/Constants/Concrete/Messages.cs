@@ -50,6 +50,12 @@ namespace Business.Constants.Concrete
         
         
         
-        public static string AuthorizationDenied => "A";
+        public static string UserRegistered => "Kullanıcı Kayıt oldu";
+        public static string UserNotFound => "Kullanıcı Bulunamadı";
+        public static string PasswordError => "Password Hatalı";
+        public static string SuccessfulLogin => "Başarılı Kayıt";
+        public static string UserAlreadyExists => "Kullanıcı Kayıtlı";
+        public static string AccessTokenCreated => "Token Oluşturuldu";
+        public static string AuthorizationDenied = "Yetkiniz yok.";
     }
 }

@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
             {
                 return Ok(result.Data);
             }
-            return BadRequest(result.Messages);
+            return BadRequest(result.Message);
         }
 
         [HttpGet("getbyid")]
@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
             {
                 return Ok(result);
             }
-            return BadRequest(result.Messages);
+            return BadRequest(result.Message);
         }
 
         [HttpPost("add")]

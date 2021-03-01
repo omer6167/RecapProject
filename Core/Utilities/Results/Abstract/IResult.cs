@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 
 namespace Core.Utilities.Results.Abstract
 {
@@ -8,8 +6,6 @@ namespace Core.Utilities.Results.Abstract
     {
          bool Success { get; }
         
-         string Messages { get; }
-
-
+         string Message { get; }
     }
 }

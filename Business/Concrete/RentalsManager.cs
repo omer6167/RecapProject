@@ -14,9 +14,9 @@ namespace Business.Concrete
 {
     public class RentalsManager : IRentalsService
     {
-        private IRentalsDal _rentalsDal;
+        private IRentalDal _rentalsDal;
 
-        public RentalsManager(IRentalsDal rentalsDal)
+        public RentalsManager(IRentalDal rentalsDal)
         {
             _rentalsDal = rentalsDal;
         }

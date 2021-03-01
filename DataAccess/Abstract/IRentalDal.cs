@@ -9,10 +9,10 @@ using Entities.DTOs;
 
 namespace DataAccess.Abstract
 {
-    public interface IRentalsDal : IEntityRepository<Rental>
+    public interface IRentalDal : IEntityRepository<Rental>
     {
         List<RentalDetailDto> GetRentalDetails();
         IDataResult<Rental> CheckReturnDate(int carId);
-        IDataResult<int> CheckCarId(int carId)
+        IDataResult<int> CheckCarId(int carId);
     }
 }

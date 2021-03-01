@@ -44,19 +44,15 @@ namespace Core.Utilities.Helpers
         public static IResult Delete(string sourcePath)
         {
             var file = Directory.GetFiles(sourcePath).Length;
-            try
-            {
+           
                 if (file == 0)
                 {
                     return new ErrorResult();
                 }
 
                 File.Delete(sourcePath);
-            }
-            catch (Exception e)
-            {
-                return new ErrorResult();
-            }
+          
+               
             return new SuccessResult();
         }
 

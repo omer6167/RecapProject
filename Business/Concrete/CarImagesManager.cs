@@ -16,7 +16,7 @@ namespace Business.Concrete
 {
     public class CarImagesManager : ICarImagesService
     {
-        string defaultImagePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\Images\CarImages\logo.jpg");
+        private readonly string _defaultImagePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\Images\CarImages\logo.jpg");
 
         private ICarImagesDal _carImagesDal;
 
@@ -41,7 +41,7 @@ namespace Business.Concrete
                     {
                         new CarImage {
                             CarId = carId,
-                            ImagePath = defaultImagePath,
+                            ImagePath = _defaultImagePath,
                             Date = DateTime.Now}
                     });
             }
@@ -55,7 +55,7 @@ namespace Business.Concrete
 
             if (!result.Success)
             {
-                return new ErrorResult(result.Messages);
+                return new ErrorResult(result.Message);
                 
             }
 

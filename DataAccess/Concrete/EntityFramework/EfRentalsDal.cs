@@ -14,7 +14,7 @@ using Entities.DTOs;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfRentalsDal : EfEntityRepositoryBase<Rental,RentACarContext> , IRentalsDal
+    public class EfRentalsDal : EfEntityRepositoryBase<Rental,RentACarContext> , IRentalDal
     {
         public List<RentalDetailDto> GetRentalDetails()
         {
@@ -32,7 +32,7 @@ namespace DataAccess.Concrete.EntityFramework
                 select new RentalDetailDto
                 {
                     BrandName = brand.Name,
-                    CustomerName = users.Name,
+                    CustomerName = users.FirstName,
                     CarName = car.Name,
                     CompanyName = customer.CompanyName,
                     RentDate = rentals.RentDate,

@@ -14,7 +14,7 @@ using Entities.DTOs;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfRentalsDal : EfEntityRepositoryBase<Rental,RentACarContext> , IRentalDal
+    public class EfRentalDal : EfEntityRepositoryBase<Rental,RentACarContext> , IRentalDal
     {
         public List<RentalDetailDto> GetRentalDetails()
         {

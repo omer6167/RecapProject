@@ -21,6 +21,8 @@ namespace WebAPI.Controllers
         }
 
 
+        #region HTTPGet
+
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
@@ -34,12 +36,10 @@ namespace WebAPI.Controllers
         }
 
 
-
-
         [HttpGet("getbycarid")]
-        public IActionResult GetByCarId(int id)
+        public IActionResult GetByCarId(int carId)
         {
-            var result = _carImageService.GetByCarId(id);
+            var result = _carImageService.GetByCarId(carId);
             if (result.Success)
             {
                 return Ok(result);
@@ -48,24 +48,27 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        #endregion
+
+
+        #region MyRegion
 
         [HttpPost("add")]
-        public IActionResult Add([FromForm] IFormFile file, CarImage carImages)
+        public IActionResult Add([FromForm(Name = ("Image"))] IFormFile file, CarImage carImages)
         {
-            var result = _carImageService.Add(file ,carImages);
+            var result = _carImageService.Add(file, carImages);
             if (result.Success)
             {
                 return Ok(result);
             }
-
             return BadRequest(result);
         }
 
 
         [HttpPost("update")]
-        public IActionResult Update([FromForm] IFormFile file, CarImage carImages)
+        public IActionResult Update([FromForm(Name = ("Image"))] IFormFile file, CarImage carImages)
         {
-            var result = _carImageService.Update(file,carImages);
+            var result = _carImageService.Update(file, carImages);
             if (result.Success)
             {
                 return Ok(result);
@@ -79,7 +82,7 @@ namespace WebAPI.Controllers
         public IActionResult Delete(int id)
         {
             var result = _carImageService.Delete(id);
-            
+
             if (result.Success)
             {
                 return Ok(result);
@@ -88,5 +91,6 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        #endregion
     }
 }

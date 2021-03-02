@@ -8,10 +8,16 @@ namespace Core.Utilities.Helpers
 {
     public class FileHelper
     {
+        private static readonly string Path = System.IO.Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"Images\CarImages");
+
+        /// <summary>
+        /// return new path from added file
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         public static string Add(IFormFile file)
         {
-            var sourcePath = Path.GetTempFileName();
-            string result;
+            var sourcePath = System.IO.Path.GetTempFileName();
 
             if (file.Length > 0)
             {
@@ -19,7 +25,7 @@ namespace Core.Utilities.Helpers
                 file.CopyTo(stream);
             }
 
-            result = NewPath(file);
+            var result = NewPath(file);
 
             File.Move(sourcePath, result);
 
@@ -27,6 +33,13 @@ namespace Core.Utilities.Helpers
             return result;
         }
 
+
+        /// <summary>
+        /// sourcePath will be deleted,return new path from added file
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="sourcePath"></param>
+        /// <returns></returns>
         public static string Update(IFormFile file, string sourcePath)
         {
             var result = NewPath(file);
@@ -44,15 +57,15 @@ namespace Core.Utilities.Helpers
         public static IResult Delete(string sourcePath)
         {
             var file = Directory.GetFiles(sourcePath).Length;
-           
-                if (file == 0)
-                {
-                    return new ErrorResult();
-                }
 
-                File.Delete(sourcePath);
-          
-               
+            if (file == 0)
+            {
+                return new ErrorResult();
+            }
+
+            File.Delete(sourcePath);
+
+
             return new SuccessResult();
         }
 
@@ -67,9 +80,7 @@ namespace Core.Utilities.Helpers
                                  $"{Guid.NewGuid():B} " +
                                  $"{fileExtension}";
 
-            string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\CarImages");
-
-            string result = $@"{path}\{uniqueFileName}";
+            string result = $@"{Path}\{uniqueFileName}";
 
             return result;
         }

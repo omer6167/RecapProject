@@ -34,7 +34,7 @@ namespace Business.Concrete
         {
             var result = BusinessRules.Run(CheckIfCarImageNull(carId));
 
-            if (result.Success)
+            if (result == null)
             {
                 return new SuccessDataResult<List<CarImage>>(
                     new List<CarImage>
@@ -45,18 +45,17 @@ namespace Business.Concrete
                             Date = DateTime.Now}
                     });
             }
-
-            return new ErrorDataResult<List<CarImage>>(_carImagesDal.GetAll(c=>c.CarId == carId));
+            return new SuccessDataResult<List<CarImage>>(_carImagesDal.GetAll(c => c.CarId == carId));
         }
 
         public IResult Add(IFormFile file, CarImage carImage)
         {
-            var result = BusinessRules.Run(CheckCarImageLimit(carImage.CarId));
+            var result = BusinessRules.Run(CheckCarImageLimit(carImage.CarId), CheckIsFormatImage(file));
 
             if (!result.Success)
             {
                 return new ErrorResult(result.Message);
-                
+
             }
 
             carImage.ImagePath = FileHelper.Add(file);
@@ -68,18 +67,25 @@ namespace Business.Concrete
 
         public IResult Update(IFormFile file, CarImage carImage)
         {
-            var result = _carImagesDal.Get(c => c.Id == carImage.Id);
+            var result = BusinessRules.Run(CheckIsFormatImage(file));
 
-           carImage.ImagePath = FileHelper.Update(file,result.ImagePath);
+            if (!result.Success)
+            {
+                return new ErrorResult(Messages.CarImagesUpdatedError);
+            }
 
-           _carImagesDal.Update(carImage);
-           
-           return new SuccessResult(Messages.CarImagesUpdated);
+            var updatedCarImage = _carImagesDal.Get(c => c.Id == carImage.Id);
+
+            carImage.ImagePath = FileHelper.Update(file, updatedCarImage.ImagePath);
+
+            _carImagesDal.Update(carImage);
+
+            return new SuccessResult(Messages.CarImagesUpdated);
         }
 
         public IResult Delete(int id)
         {
-            var data = _carImagesDal.Get(c=>c.CarId ==id);
+            var data = _carImagesDal.Get(c => c.CarId == id);
 
             var result = FileHelper.Delete(data.ImagePath);
             if (!result.Success)
@@ -88,7 +94,6 @@ namespace Business.Concrete
             }
 
             _carImagesDal.Delete(data);
-
 
             return new SuccessResult(Messages.CarImagesAdded);
         }
@@ -107,18 +112,19 @@ namespace Business.Concrete
         }
 
         /// <summary>
-        /// Return true if car's image == null
+        /// 
         /// </summary>
         /// <param name="carId"></param>
-        /// <returns></returns>
+        /// <returns>true if car's image = null</returns>
         private IResult CheckIfCarImageNull(int carId)
         {
             var result = _carImagesDal.GetAll(c => c.CarId == carId).Any();
-            if (!result)
+
+            if (result)
             {
-                return new SuccessResult();
+                return new ErrorResult();
             }
-            return new ErrorResult();
+            return new SuccessResult();
         }
 
         private IResult CheckIsFormatImage(IFormFile file)
@@ -129,7 +135,7 @@ namespace Business.Concrete
             {
                 return new SuccessResult();
             }
-            
+
             return new ErrorResult();
         }
     }

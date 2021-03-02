@@ -8,6 +8,7 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using System.Collections.Generic;
+using Business.BusinessAspects;
 
 namespace Business.Concrete
 {
@@ -62,6 +63,7 @@ namespace Business.Concrete
         }
         
         
+        [SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {

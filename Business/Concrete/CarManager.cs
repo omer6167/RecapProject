@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Business.Abstract;
+﻿using Business.Abstract;
 using Business.Constants.Concrete;
 using Business.ValidationRule.CustomValidation;
 using Core.Aspects.Autofac.Validation;
@@ -10,6 +7,7 @@ using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using System.Collections.Generic;
 
 namespace Business.Concrete
 {
@@ -38,24 +36,31 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
         }
 
-        public IDataResult<List<Car>> GetByBrandId(int id)
+        public IDataResult<List<Car>> GetByBrandId(int brandId)
         {
 
             //Bussiness Code
 
             //Dal Code
-            return new  SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == id));
+            return new  SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId));
         }
 
-        public IDataResult<List<Car>> GetByColorId(int id)
+        public IDataResult<List<Car>> GetByColorId(int colorId)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id));
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId));
+        }
+        
+        
+        public IDataResult<List<Car>> GetByDailyPrice(decimal min, decimal max)
+        {
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max));
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetail()
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetail());
         }
+        
         
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)

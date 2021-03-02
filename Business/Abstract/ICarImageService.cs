@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Business.Abstract
 {
-    public interface ICarImagesService 
+    public interface ICarImageService 
     {
         IDataResult<List<CarImage>> GetAll();
         IDataResult<List<CarImage>> GetByCarId(int carId);

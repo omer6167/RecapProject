@@ -47,15 +47,20 @@ namespace Business.Constants.Concrete
         public static string CarImagesAddedError => "Araba Resmi Ekleme İşlemi Başarısız";
         public static string CarImagesUpdatedError => "Araba Resmi Güncellenme İşlemi Başarısız";
         public static string CarImagesDeletedError => "Araba Resmi Silme İşlemi Başarısız";
+
         
-        
-        
+        public static string Listed => "Ürünler Başarılı bir şekilde listelendi";
+
+
+
+
         public static string UserRegistered => "Kullanıcı Kayıt oldu";
         public static string UserNotFound => "Kullanıcı Bulunamadı";
         public static string PasswordError => "Password Hatalı";
         public static string SuccessfulLogin => "Başarılı Kayıt";
         public static string UserAlreadyExists => "Kullanıcı Kayıtlı";
         public static string AccessTokenCreated => "Token Oluşturuldu";
+        
         public static string AuthorizationDenied = "Yetkiniz yok.";
     }
 }

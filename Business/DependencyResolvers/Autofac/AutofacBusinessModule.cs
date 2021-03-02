@@ -33,7 +33,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfRentalsDal>().As<IRentalDal>().SingleInstance();
 
             
-            builder.RegisterType<CarImageManager>().As<ICarImagesService>().SingleInstance();
+            builder.RegisterType<CarImageManager>().As<ICarImageService>().SingleInstance();
             builder.RegisterType<EfCarImagesDal>().As<ICarImagesDal>().SingleInstance();
 
 

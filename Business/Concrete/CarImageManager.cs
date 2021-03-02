@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Business.Concrete
 {
-    public class CarImageManager : ICarImagesService
+    public class CarImageManager : ICarImageService
     {
         private readonly string _defaultImagePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\Images\CarImages\logo.jpg");
 

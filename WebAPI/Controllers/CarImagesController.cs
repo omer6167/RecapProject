@@ -13,18 +13,18 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CarImagesController : ControllerBase
     {
-        private ICarImagesService _carImagesService;
+        private ICarImageService _carImageService;
 
-        public CarImagesController(ICarImagesService carImagesService)
+        public CarImagesController(ICarImageService carImageService)
         {
-            _carImagesService = carImagesService;
+            _carImageService = carImageService;
         }
 
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var result = _carImagesService.GetAll();
+            var result = _carImageService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbycarid")]
         public IActionResult GetByCarId(int id)
         {
-            var result = _carImagesService.GetByCarId(id);
+            var result = _carImageService.GetByCarId(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public IActionResult Add([FromForm] IFormFile file, CarImage carImages)
         {
-            var result = _carImagesService.Add(file ,carImages);
+            var result = _carImageService.Add(file ,carImages);
             if (result.Success)
             {
                 return Ok(result);
@@ -65,7 +65,7 @@ namespace WebAPI.Controllers
         [HttpPost("update")]
         public IActionResult Update([FromForm] IFormFile file, CarImage carImages)
         {
-            var result = _carImagesService.Update(file,carImages);
+            var result = _carImageService.Update(file,carImages);
             if (result.Success)
             {
                 return Ok(result);
@@ -78,7 +78,7 @@ namespace WebAPI.Controllers
         [HttpPost("delete")]
         public IActionResult Delete(int id)
         {
-            var result = _carImagesService.Delete(id);
+            var result = _carImageService.Delete(id);
             
             if (result.Success)
             {

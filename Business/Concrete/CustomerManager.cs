@@ -10,11 +10,11 @@ using Entities.Concrete;
 
 namespace Business.Concrete
 {
-    public class CustomersManager : ICustomersService
+    public class CustomerManager : ICustomerService
     {
         private ICustomerDal _customersDal;
 
-        public CustomersManager(ICustomerDal customersDal)
+        public CustomerManager(ICustomerDal customersDal)
         {
             _customersDal = customersDal;
         }

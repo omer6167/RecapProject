@@ -12,11 +12,11 @@ using Entities.DTOs;
 
 namespace Business.Concrete
 {
-    public class RentalsManager : IRentalsService
+    public class RentalManager : IRentalService
     {
         private IRentalDal _rentalsDal;
 
-        public RentalsManager(IRentalDal rentalsDal)
+        public RentalManager(IRentalDal rentalsDal)
         {
             _rentalsDal = rentalsDal;
         }

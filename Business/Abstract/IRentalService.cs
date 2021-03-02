@@ -8,7 +8,7 @@ using Entities.DTOs;
 
 namespace Business.Abstract
 {
-    public interface IRentalsService : IServiceRepository<Rental>
+    public interface IRentalService : IServiceRepository<Rental>
     {
         IDataResult<List<RentalDetailDto>> GetRentalDetails();
         IResult Rent(Rental rentals);

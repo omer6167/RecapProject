@@ -27,8 +27,8 @@ namespace WebAPI
             services.AddControllers();
             //services.AddSingleton<IBrandService, BrandManager>();
             //services.AddSingleton<IBrandDal, EfBrandDal>();
-
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();// Ýnstance web Apide üretilmek Zorunda
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
@@ -47,7 +47,6 @@ namespace WebAPI
                     };
                 });
             ServiceTool.Create(services);
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

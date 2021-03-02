@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
+using Business.BusinessAspects;
 using Business.Constants.Concrete;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -19,7 +20,6 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-
         public IDataResult<List<Brand>> GetAll()
         {
             return new SuccessDataResult<List<Brand>>(_brandDal.GetAll());
@@ -30,6 +30,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Brand>(_brandDal.Get(b=> b.Id == id));
         }
 
+        [SecuredOperation("brand.add,admin")]
         public IResult Add(Brand brand)
         {
             _brandDal.Add(brand);

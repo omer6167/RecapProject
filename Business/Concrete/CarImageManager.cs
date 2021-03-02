@@ -14,13 +14,13 @@ using Microsoft.AspNetCore.Http;
 
 namespace Business.Concrete
 {
-    public class CarImagesManager : ICarImagesService
+    public class CarImageManager : ICarImagesService
     {
         private readonly string _defaultImagePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\Images\CarImages\logo.jpg");
 
         private ICarImagesDal _carImagesDal;
 
-        public CarImagesManager(ICarImagesDal carImagesDal)
+        public CarImageManager(ICarImagesDal carImagesDal)
         {
             _carImagesDal = carImagesDal;
         }

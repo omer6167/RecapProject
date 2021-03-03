@@ -8,7 +8,8 @@ namespace Core.Utilities.Helpers
 {
     public class FileHelper
     {
-        private static readonly string Path = System.IO.Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"Images\CarImages");
+        private static string Path = System.IO.Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\Images\CarImages");
+
 
         /// <summary>
         /// return new path from added file
@@ -18,14 +19,24 @@ namespace Core.Utilities.Helpers
         public static string Add(IFormFile file)
         {
             var sourcePath = System.IO.Path.GetTempFileName();
+          
+           
 
-            if (file.Length > 0)
+
+
+            if (file.Length > 0 )
             {
                 using var stream = new FileStream(sourcePath, FileMode.Create);
                 file.CopyTo(stream);
             }
 
             var result = NewPath(file);
+
+            //if (!File.Exists(result))
+            //{
+            //    using (FileStream fs = File.Create(result)) { }
+
+            //}
 
             File.Move(sourcePath, result);
 
@@ -71,16 +82,18 @@ namespace Core.Utilities.Helpers
 
         public static string NewPath(IFormFile file)
         {
+            string CurrentPath = @"C:\Users\SKUCUK\source\repos\ReCapProject\Images\CarImages";
+
             FileInfo fileInfo = new FileInfo(file.FileName);
             string fileExtension = fileInfo.Extension;
 
-            var uniqueFileName = $"{DateTime.Now.Month}/" +
-                                 $"{DateTime.Now.Day}/" +
-                                 $"{DateTime.Now.Year}-" +
-                                 $"{Guid.NewGuid():B} " +
+            var uniqueFileName = $"{DateTime.Now.Month}_" +
+                                 $"{DateTime.Now.Day}_" +
+                                 $"{DateTime.Now.Year}_" +
+                                 $"_{Guid.NewGuid():B}" +
                                  $"{fileExtension}";
 
-            string result = $@"{Path}\{uniqueFileName}";
+            string result = $@"{CurrentPath}\{uniqueFileName}";
 
             return result;
         }

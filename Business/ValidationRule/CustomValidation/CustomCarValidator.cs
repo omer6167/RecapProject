@@ -5,7 +5,7 @@ using Entities.Concrete;
 
 namespace Business.ValidationRule.CustomValidation
 {
-    public class CarValidator
+    public class CustomCarValidator
     {
         
         public static void ValidateNameLength(Car car)

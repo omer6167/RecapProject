@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Core.Utilities.Results.Abstract;
+using Core.Utilities.Results.Concrete;
 
 namespace Core.Utilities.Busines
 {
@@ -12,7 +13,15 @@ namespace Core.Utilities.Busines
         /// <returns>Return first error, if any error can't be find return null</returns>
         public static IResult Run(params IResult[] logics)
         {
-            return logics.FirstOrDefault(logic => !logic.Success);
+            foreach (var logic in logics)
+            {
+                if (!logic.Success)
+                {
+                    return logic;
+                }
+            }
+
+            return new SuccessResult();
         }
     }
 }

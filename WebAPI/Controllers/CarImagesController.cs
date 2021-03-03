@@ -54,7 +54,7 @@ namespace WebAPI.Controllers
         #region MyRegion
 
         [HttpPost("add")]
-        public IActionResult Add([FromForm(Name = ("Image"))] IFormFile file, CarImage carImages)
+        public IActionResult Add([FromForm(Name = ("Image"))] IFormFile file, [FromForm] CarImage carImages)
         {
             var result = _carImageService.Add(file, carImages);
             if (result.Success)
@@ -66,7 +66,7 @@ namespace WebAPI.Controllers
 
 
         [HttpPost("update")]
-        public IActionResult Update([FromForm(Name = ("Image"))] IFormFile file, CarImage carImages)
+        public IActionResult Update([FromForm(Name = ("Image"))] IFormFile file, [FromForm] CarImage carImages)
         {
             var result = _carImageService.Update(file, carImages);
             if (result.Success)

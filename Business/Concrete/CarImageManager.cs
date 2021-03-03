@@ -34,7 +34,7 @@ namespace Business.Concrete
         {
             var result = BusinessRules.Run(CheckIfCarImageNull(carId));
 
-            if (result == null)
+            if (result.Success)
             {
                 return new SuccessDataResult<List<CarImage>>(
                     new List<CarImage>
@@ -55,7 +55,6 @@ namespace Business.Concrete
             if (!result.Success)
             {
                 return new ErrorResult(result.Message);
-
             }
 
             carImage.ImagePath = FileHelper.Add(file);
@@ -136,7 +135,7 @@ namespace Business.Concrete
                 return new SuccessResult();
             }
 
-            return new ErrorResult();
+            return new ErrorResult(Messages.WrongFormatError);
         }
     }
 }

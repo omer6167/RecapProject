@@ -9,8 +9,8 @@ namespace Core.Utilities.Helpers
     public class FileHelper
     {
         private static string Path = System.IO.Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\Images\CarImages");
-
-
+        
+        
         /// <summary>
         /// return new path from added file
         /// </summary>
@@ -19,27 +19,17 @@ namespace Core.Utilities.Helpers
         public static string Add(IFormFile file)
         {
             var sourcePath = System.IO.Path.GetTempFileName();
-          
-           
 
-
-
-            if (file.Length > 0 )
+            if (file.Length > 0)
             {
                 using var stream = new FileStream(sourcePath, FileMode.Create);
                 file.CopyTo(stream);
             }
 
             var result = NewPath(file);
+        
 
-            //if (!File.Exists(result))
-            //{
-            //    using (FileStream fs = File.Create(result)) { }
-
-            //}
-
-            File.Move(sourcePath, result);
-
+        File.Move(sourcePath, result);
 
             return result;
         }
@@ -67,9 +57,9 @@ namespace Core.Utilities.Helpers
 
         public static IResult Delete(string sourcePath)
         {
-            var file = Directory.GetFiles(sourcePath).Length;
+            
 
-            if (file == 0)
+            if (sourcePath.Length == 0)
             {
                 return new ErrorResult();
             }
@@ -82,20 +72,26 @@ namespace Core.Utilities.Helpers
 
         public static string NewPath(IFormFile file)
         {
-            string CurrentPath = @"C:\Users\SKUCUK\source\repos\ReCapProject\Images\CarImages";
+            //string CurrentPath = @"C:\Users\SKUCUK\source\repos\ReCapProject\Images\CarImages";
 
             FileInfo fileInfo = new FileInfo(file.FileName);
             string fileExtension = fileInfo.Extension;
 
-            var uniqueFileName = $"{DateTime.Now.Month}_" +
-                                 $"{DateTime.Now.Day}_" +
+            var uniqueFileName = $"{DateTime.Now.Day}_" +
+                                 $"{DateTime.Now.Month}_" +
                                  $"{DateTime.Now.Year}_" +
                                  $"_{Guid.NewGuid():B}" +
                                  $"{fileExtension}";
 
-            string result = $@"{CurrentPath}\{uniqueFileName}";
+            string result = $@"{Path}\{uniqueFileName}";
 
             return result;
         }
+
+        //if (!File.Exists(result))
+        //{
+        //    using (FileStream fs = File.Create(result)) { }
+
+        //}
     }
 }

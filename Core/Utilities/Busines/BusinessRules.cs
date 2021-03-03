@@ -6,6 +6,7 @@ namespace Core.Utilities.Busines
 {
     public class BusinessRules
     {
+        
         /// <summary>
         /// 
         /// </summary>

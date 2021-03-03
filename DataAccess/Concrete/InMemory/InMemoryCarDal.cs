@@ -8,14 +8,16 @@ using Entities.DTOs;
 
 namespace DataAccess.Concrete.InMemory
 {
-    public class InMemoryCarDal:ICarDal
+    public class InMemoryCarDal : ICarDal
     {
         private List<Car> _cars;
         private List<Brand> _brands;
         private List<Color> _colors;
-
+        
         public InMemoryCarDal()
         {
+            _brands = new List<Brand>();
+            _colors = new List<Color>();
             _cars = new List<Car>()
             {
                 new Car() { Id = 1,BrandId = 1,ColorId = 1,DailyPrice = 200,Description = "New Car"},
@@ -25,13 +27,13 @@ namespace DataAccess.Concrete.InMemory
                 new Car() { Id = 5,BrandId = 2,ColorId = 2,DailyPrice = 100,Description = "Old Fox"}
             };
         }
-        
 
-        
+
+
 
         public List<Car> GetAll(Expression<Func<Car, bool>> expressionFilter = null)
         {
-            return  expressionFilter == null
+            return expressionFilter == null
                 ? _cars.ToList()
                 : _cars.Where(expressionFilter.Compile()).ToList();
         }
@@ -78,17 +80,17 @@ namespace DataAccess.Concrete.InMemory
         {
             // _brand ve _colors nesne örneği üretilmedi
             var result = from car in _cars.ToList()
-                join brand in _brands.ToList()
-                    on car.BrandId equals brand.Id
-                join color in _colors.ToList()
-                    on car.ColorId equals color.Id
-                select new CarDetailDto
-                {
-                    CarName = car.Name,
-                    BrandName = brand.Name,
-                    ColorName = color.Name,
-                    DailyPrice = car.DailyPrice
-                };
+                         join brand in _brands.ToList()
+                             on car.BrandId equals brand.Id
+                         join color in _colors.ToList()
+                             on car.ColorId equals color.Id
+                         select new CarDetailDto
+                         {
+                             CarName = car.Name,
+                             BrandName = brand.Name,
+                             ColorName = color.Name,
+                             DailyPrice = car.DailyPrice
+                         };
             return result.ToList();
         }
     }

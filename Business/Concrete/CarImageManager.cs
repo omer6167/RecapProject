@@ -72,6 +72,8 @@ namespace Business.Concrete
             {
                 return new ErrorResult(Messages.CarImagesUpdatedError);
             }
+            
+            //Transaction
 
             var updatedCarImage = _carImagesDal.Get(c => c.Id == carImage.Id);
 
@@ -94,7 +96,7 @@ namespace Business.Concrete
 
             _carImagesDal.Delete(data);
 
-            return new SuccessResult(Messages.CarImagesAdded);
+            return new SuccessResult(Messages.CarImagesDeleted);
         }
 
 
@@ -134,7 +136,7 @@ namespace Business.Concrete
             {
                 return new SuccessResult();
             }
-
+            
             return new ErrorResult(Messages.WrongFormatError);
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Core.Entities.Concrete;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework
@@ -23,6 +24,13 @@ namespace DataAccess.Concrete.EntityFramework
             modelBuilder.Entity<CarImage>()
                 .Property(car => car.Date)
                 .HasDefaultValueSql("getdate()");
+            
+            
+
+            modelBuilder.Entity<Rental>().Property(r=> r.ReturnDate).IsRequired(false);
+
+            modelBuilder.Entity<RentalDetailDto>().Property(r => r.ReturnDate).IsRequired(false);
+            modelBuilder.Entity<RentalDetailDto>().HasNoKey();
 
 
             //modelBuilder.Entity<User>()

@@ -1,6 +1,5 @@
 ﻿using Business.Abstract;
 using Business.Constants.Concrete;
-using Business.ValidationRule.CustomValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -10,6 +9,7 @@ using Entities.DTOs;
 using System.Collections.Generic;
 using Business.BusinessAspects;
 using Business.ValidationRule.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete
 {
@@ -38,6 +38,8 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
         }
 
+
+        [CacheAspect(duration: 10)]
         public IDataResult<List<Car>> GetByBrandId(int brandId)
         {
 
@@ -64,8 +66,9 @@ namespace Business.Concrete
         }
 
 
-        [SecuredOperation("car.add,admin")]
+        [SecuredOperation(roles:"car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
         {
 
@@ -87,6 +90,8 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarUpdated);
         }
 
+        [SecuredOperation("car.delete")]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Delete(Car car)
         {
 

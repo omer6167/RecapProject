@@ -50,7 +50,7 @@ namespace Business.Concrete
 
         public IResult Add(IFormFile file, CarImage carImage)
         {
-            var result = BusinessRules.Run(CheckCarImageLimit(carImage.CarId), CheckIsFormatImage(file));
+            var result = BusinessRules.Run(CheckCarImageLimit(carImage.CarId), CheckImageFormat(file));
 
             if (!result.Success)
             {
@@ -66,13 +66,13 @@ namespace Business.Concrete
 
         public IResult Update(IFormFile file, CarImage carImage)
         {
-            var result = BusinessRules.Run(CheckIsFormatImage(file));
+            var result = BusinessRules.Run(CheckImageFormat(file));
 
             if (!result.Success)
             {
                 return new ErrorResult(Messages.CarImagesUpdatedError);
             }
-            
+
             //Transaction
 
             var updatedCarImage = _carImagesDal.Get(c => c.Id == carImage.Id);
@@ -111,7 +111,7 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -128,7 +128,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        private IResult CheckIsFormatImage(IFormFile file)
+        private IResult CheckImageFormat(IFormFile file)
         {
             var extension = Path.GetExtension(file.FileName);
             string[] allowedExtensions = { ".gif", ".png", ".jpeg", ".jpg" };
@@ -136,7 +136,7 @@ namespace Business.Concrete
             {
                 return new SuccessResult();
             }
-            
+
             return new ErrorResult(Messages.WrongFormatError);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Core.Entities;
 
@@ -12,6 +13,7 @@ namespace Entities.Concrete
         public int CarId { get; set; }
         public int CustomerId { get; set; }
         public DateTime RentDate { get; set; }
-        public DateTime ReturnDate { get; set; }
+        //[AllowNull]
+        public DateTime? ReturnDate { get; set; }
     }
 }

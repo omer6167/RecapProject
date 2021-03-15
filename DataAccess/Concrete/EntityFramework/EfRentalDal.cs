@@ -32,11 +32,11 @@ namespace DataAccess.Concrete.EntityFramework
                 select new RentalDetailDto
                 {
                     BrandName = brand.Name,
-                    CustomerName = users.FirstName,
+                    FullName = users.FirstName + users.LastName,
                     CarName = car.Name,
                     CompanyName = customer.CompanyName,
                     RentDate = rentals.RentDate,
-                    ReturnDate = rentals.ReturnDate
+                    ReturnDate = (DateTime) rentals.ReturnDate
                 };
             return result.ToList();
         }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Business.Abstract;
 using Business.Constants.Concrete;
+using Core.Aspects.Autofac.Transaction;
 using Core.Utilities.Busines;
 using Core.Utilities.Helpers;
 using Core.Utilities.Results.Abstract;
@@ -16,7 +16,7 @@ namespace Business.Concrete
 {
     public class CarImageManager : ICarImageService
     {
-        private readonly string _defaultImagePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\Images\CarImages\logo.jpg");
+        private readonly string _defaultImagePath =  @"\Images\logo.jpg";
 
         private ICarImagesDal _carImagesDal;
 
@@ -47,10 +47,11 @@ namespace Business.Concrete
             }
             return new SuccessDataResult<List<CarImage>>(_carImagesDal.GetAll(c => c.CarId == carId));
         }
-
+        
+        [TransactionScopeAspect]
         public IResult Add(IFormFile file, CarImage carImage)
         {
-            var result = BusinessRules.Run(CheckCarImageLimit(carImage.CarId), CheckImageFormat(file));
+            var result = BusinessRules.Run(CheckCarImageLimit(carImage.CarId)); //, CheckImageFormat(file)
 
             if (!result.Success)
             {
@@ -64,14 +65,15 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImagesAdded);
         }
 
+        [TransactionScopeAspect]
         public IResult Update(IFormFile file, CarImage carImage)
         {
-            var result = BusinessRules.Run(CheckImageFormat(file));
+            //var result = BusinessRules.Run(CheckImageFormat(file));
 
-            if (!result.Success)
-            {
-                return new ErrorResult(Messages.CarImagesUpdatedError);
-            }
+            //if (!result.Success)
+            //{
+            //    return new ErrorResult(Messages.CarImagesUpdatedError);
+            //}
 
             //Transaction
 
@@ -84,6 +86,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImagesUpdated);
         }
 
+        [TransactionScopeAspect]
         public IResult Delete(int id)
         {
             var data = _carImagesDal.Get(c => c.CarId == id);
@@ -128,16 +131,16 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        private IResult CheckImageFormat(IFormFile file)
-        {
-            var extension = Path.GetExtension(file.FileName);
-            string[] allowedExtensions = { ".gif", ".png", ".jpeg", ".jpg" };
-            if (allowedExtensions.Contains(extension.ToLower()))
-            {
-                return new SuccessResult();
-            }
+        //private IResult CheckImageFormat(IFormFile file)
+        //{
+        //    var extension = Path.GetExtension(file.FileName);
+        //    string[] allowedExtensions = { ".gif", ".png", ".jpeg", ".jpg" };
+        //    if (allowedExtensions.Contains(extension.ToLower()))
+        //    {
+        //        return new SuccessResult();
+        //    }
 
-            return new ErrorResult(Messages.WrongFormatError);
-        }
+        //    return new ErrorResult(Messages.WrongFormatError);
+        //}
     }
 }

@@ -1,60 +1,67 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading;
-using Core.DataAccess;
-using Core.DataAccess.EntityFramework;
+﻿using Core.DataAccess.EntityFramework;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfRentalDal : EfEntityRepositoryBase<Rental,RentACarContext> , IRentalDal
+    public class EfRentalDal : EfEntityRepositoryBase<Rental, RentACarContext>, IRentalDal
     {
-        public List<RentalDetailDto> GetRentalDetails()
+        public List<RentalDetailDto> GetRentalDetails(Expression<Func<Rental, bool>> filter = null)
         {
             using var context = new RentACarContext();
             var result =
-                from rentals in context.Rentals
-                    join customer in context.Customers
-                        on rentals.CustomerId equals customer.UserId
-                    join users in context.Users
-                        on customer.UserId equals users.Id
-                    join car in context.Cars
-                        on rentals.CarId equals car.Id
-                    join brand in context.Brands 
-                        on car.BrandId equals brand.Id
+                from rentals in filter == null 
+                    ? context.Rentals
+                    : context.Rentals.Where(filter)
+                join customer in context.Customers
+                    on rentals.CustomerId equals customer.UserId
+                join users in context.Users
+                    on customer.UserId equals users.Id
+                join car in context.Cars
+                    on rentals.CarId equals car.Id
+                join brand in context.Brands
+                    on car.BrandId equals brand.Id
                 select new RentalDetailDto
                 {
+                    Id = rentals.Id,
+                    CarId = car.Id,
                     BrandName = brand.Name,
-                    FullName = users.FirstName + users.LastName,
+                    FullName = users.FirstName + " " + users.LastName,
                     CarName = car.Name,
                     CompanyName = customer.CompanyName,
                     RentDate = rentals.RentDate,
-                    ReturnDate = (DateTime) rentals.ReturnDate
+                    ReturnDate = (DateTime)rentals.ReturnDate,
+                    DailyPrice = car.DailyPrice,
+                    Description = car.Description,
+                    Price = rentals.Price,
+                    FakeCardId = rentals.FakeCardId
                 };
             return result.ToList();
         }
 
-        public IDataResult<int> CheckCarId(int carId)
+        [Obsolete("Useless,will be refactoring")]
+        public IDataResult<int> CheckCarId(int carId) //
         {
+            int a=0;
             using var context = new RentACarContext();
             var result =
                 from rentals in context.Rentals
                 where carId == rentals.CarId && rentals.RentDate == null
-                select rentals.CarId;
-            
-            if (result.Any())
-            {
-                return new ErrorDataResult<int>(result.Count());
-            }
+                select a == rentals.CarId;
 
-            return new SuccessDataResult<int>(result.Count());
+            if (!result.Any())
+            {
+                return new SuccessDataResult<int>(result.Count());
+            }
+            return new ErrorDataResult<int>(result.Count());
+            
         }
 
         public IDataResult<Rental> CheckReturnDate(int carId)
@@ -62,7 +69,7 @@ namespace DataAccess.Concrete.EntityFramework
             using var context = new RentACarContext();
             var result =
                 from rentals in context.Rentals
-                where carId == rentals.CarId && rentals.RentDate == null
+                where carId == rentals.CarId  && rentals.ReturnDate == null
                 select new Rental
                 {
                     Id = rentals.Id,
@@ -70,13 +77,12 @@ namespace DataAccess.Concrete.EntityFramework
                     RentDate = rentals.RentDate,
                     ReturnDate = rentals.ReturnDate
                 };
-            
-            if (result == null)
-            {
-                return new ErrorDataResult<Rental>(result.LastOrDefault());
-            }
 
-            return new SuccessDataResult<Rental>(result.LastOrDefault());
+            if (!result.Any())
+            {
+                return new SuccessDataResult<Rental>(result.SingleOrDefault());
+            }
+            return new ErrorDataResult<Rental>(result.SingleOrDefault());
         }
     }
 }

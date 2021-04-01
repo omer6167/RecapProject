@@ -42,6 +42,8 @@ namespace Business.Constants.Concrete
         public static string CarAddError = "Araç Kayıt İşlemi Başarısız";
         public static string RentalErorr = "Kiralama işlemi Başarısız";
         public static string RentalUpdatedErorr = "İlgili Araba hali hazırda kiralık durumda";
+        public static string IsNotRentable = "Araba Kiralık";
+
 
 
         public static string CarImagesAddedError => "Araba Resmi Ekleme İşlemi Başarısız";

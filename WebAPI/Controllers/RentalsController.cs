@@ -1,11 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Business.Abstract;
+﻿using Business.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
@@ -32,6 +27,18 @@ namespace WebAPI.Controllers
             }
 
             return BadRequest(result);
+        }
+
+        [HttpGet("isrentable")]
+        public IActionResult IsRentable(int carId)  // Success verisine erişilmek istendiği için BadRequest Döndürülmemeli
+        {
+            var result = _rentalsService.IsRentable(carId);
+            
+                
+            return Ok(result);
+            
+
+            //return BadRequest(result);
         }
         
         [HttpGet("getbyid")]

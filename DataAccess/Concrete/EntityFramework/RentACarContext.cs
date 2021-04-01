@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Entities.Concrete;
+﻿using Core.Entities.Concrete;
 using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +26,8 @@ namespace DataAccess.Concrete.EntityFramework
 
             modelBuilder.Entity<Rental>().Property(r=> r.ReturnDate).IsRequired(false);
 
+            //modelBuilder.Entity<Rental>().Property(r => r.Price).IsRequired(false); //Decimal property can not be nullable
+
             modelBuilder.Entity<RentalDetailDto>().Property(r => r.ReturnDate).IsRequired(false);
             modelBuilder.Entity<RentalDetailDto>().HasNoKey();
 
@@ -46,6 +45,8 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Rental> Rentals { get; set; }
+        public DbSet<FakeCard> FakeCards { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<User> Users { get; set; }

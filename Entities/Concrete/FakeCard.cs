@@ -1,12 +1,11 @@
-﻿using System;
-using Core.Entities;
+﻿using Core.Entities;
 
 namespace Entities.Concrete
 {
     public class FakeCard : IEntity
     {
         public int Id { get; set; }
-
+        public int CustomerId { get; set; }
         public string Name { get; set; }
         public string Number { get; set; }
 

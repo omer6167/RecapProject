@@ -16,7 +16,6 @@ namespace Business.Concrete
             _fakeCardDal = fakeCardDal;
         }
 
-      
 
         public IDataResult<List<FakeCard>> GetAll()
         {
@@ -25,7 +24,7 @@ namespace Business.Concrete
 
         public IDataResult<FakeCard> GetById(int cardId)
         {
-            return new SuccessDataResult<FakeCard>(_fakeCardDal.Get(c => c.Id == cardId));
+            return new SuccessDataResult<FakeCard>(_fakeCardDal.Get(c => c.Id== cardId));
         }
 
         public IDataResult<List<FakeCard>> GetByCardNumber(string cardNumber)
@@ -47,7 +46,7 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-
+        
         
         public IResult Add(FakeCard fakeCard)
         {
@@ -65,6 +64,11 @@ namespace Business.Concrete
         {
             _fakeCardDal.Update(fakeCard);
             return new SuccessResult();
+        }
+
+        public IDataResult<List<FakeCard>> GetByCustomerId(int customerId)
+        {
+            return new SuccessDataResult<List<FakeCard>>(_fakeCardDal.GetAll(c => c.CustomerId == customerId));
         }
     }
 }

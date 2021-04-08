@@ -85,11 +85,22 @@ namespace WebAPI.Controllers
         public IActionResult IsCardExist(FakeCard fakeCard)
         {
             var result = _fakeCardService.IsCardExist(fakeCard);
+            return Ok(result);
+        }
+
+
+        [HttpGet("getbycustomerid")]
+        public IActionResult GetByCustomerId(int customerId)
+        {
+            var result = _fakeCardService.GetByCustomerId(customerId);
+
             if (result.Success)
             {
                 return Ok(result);
             }
-            return Ok(result);
+
+            return BadRequest(result);
+
         }
     }
 }

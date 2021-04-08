@@ -63,6 +63,7 @@ namespace Business.Constants.Concrete
         public static string UserAlreadyExists => "Kullanıcı Kayıtlı";
         public static string AccessTokenCreated => "Token Oluşturuldu";
         public static string WrongFormatError => "Hatalı Format Girişimi";
+        public static string PasswordUpdated => "Parola Değişti";
 
         public static string AuthorizationDenied = "Yetkiniz yok.";
     }

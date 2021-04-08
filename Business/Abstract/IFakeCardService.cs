@@ -11,6 +11,7 @@ namespace Business.Abstract
         IDataResult<List<FakeCard>> GetByCardNumber(string cardNumber);
 
         IResult IsCardExist(FakeCard fakeCard);
+        IDataResult<List<FakeCard>> GetByCustomerId(int customerId);
 
     }
 

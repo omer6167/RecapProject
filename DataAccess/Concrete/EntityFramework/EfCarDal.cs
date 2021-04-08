@@ -25,8 +25,9 @@ namespace DataAccess.Concrete.EntityFramework
                     BrandName = brand.Name,
                     ColorName = color.Name,
                     DailyPrice = car.DailyPrice,
-                    Description = car.Description
-
+                    Description = car.Description,
+                    MinFindeksScore = car.MinFindeksScore
+                    
                 };
             return result.ToList();
         }
@@ -47,8 +48,8 @@ namespace DataAccess.Concrete.EntityFramework
                     BrandName = brand.Name,
                     ColorName = color.Name,
                     DailyPrice = car.DailyPrice,
-                    Description = car.Description
-
+                    Description = car.Description,
+                    MinFindeksScore = car.MinFindeksScore
                 };
             return result.ToList()[0];
         }

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Business.Abstract;
+﻿using Business.Abstract;
 using Business.Constants.Concrete;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using System.Collections.Generic;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -48,6 +47,11 @@ namespace Business.Concrete
             _customersDal.Delete(customers);
 
             return new SuccessResult(Messages.CustomersDeleted);
+        }
+
+        public IDataResult<UserDetailDto> GetByEmail(string email)
+        {
+            return new SuccessDataResult<UserDetailDto>(_customersDal.GetCustomerOfUser(email));
         }
     }
 }

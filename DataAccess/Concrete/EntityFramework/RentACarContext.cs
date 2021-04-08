@@ -32,6 +32,9 @@ namespace DataAccess.Concrete.EntityFramework
             modelBuilder.Entity<RentalDetailDto>().HasNoKey();
 
 
+            modelBuilder.Entity<FakeCard>().Property(f => f.CustomerId).IsRequired(false);
+
+
             //modelBuilder.Entity<User>()
             //    .Property(U => U.Name)
             //    .HasComputedColumnSql("[LastName] + ', ' + [FirstName]");

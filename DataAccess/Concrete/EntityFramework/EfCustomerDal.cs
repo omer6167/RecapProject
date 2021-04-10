@@ -25,6 +25,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  Email = u.Email,
                                  FindeksScore = c.FindeksScore,
                                  CompanyName = c.CompanyName
+                                 
                              };
 
                 return result.SingleOrDefault();
